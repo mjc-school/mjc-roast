@@ -1,0 +1,52 @@
+== SQL
+* What is `Database`?
+* What is `Relational` DB?
+* What is `RDBMS`?
+* What is the difference between `DB` and `RDBMS`?
+* What is `SQL`?
+* Name some examples of `RDBMS`. What `RDBMS` have you used?
+* What is `NoSql`?
+* What are `main functions of RDBMS`?
+* Compare `RDBMS` vs `NoSql`?
+* What is a `relational data model`?
+* What are components/aspects of `relational data model`?
+* What are categories/types of SQL statements/commands?
+* What are `Data Definition Language (DDL)` commands?
+* What are `Data Manipulation Language(DML)` commands?
+* What are `DQL (Data Query Language)` commands?
+* What are `DCL (Data Control Language)` commands?
+* What are `TCL (Transaction Control Language)` commands?
+* What SQL Aggregation functions do you know?
+* What data types in SQL do you know? What values can they have? What are column constraints in SQL?
+* What relation types between tables do you know? How to create a m2m relation?
+* What are `Keys` in DBMS?
+* What types of keys in DBMS do you know? Why we need a key?
+* What are `Primary` and `Foreign` keys?
+* What is the difference between `Primary` & `Foreign` keys?
+* What is `Primary` Key?
+* What are criteria to select `Primary` Key?
+* What is `Foreign` key?
+* What is `Composite` key?
+* What is `Compound` key?
+* What is `Alternate` key?
+* What is `Candidate` key?
+* Are compound and composite keys the same?
+* What is difference between primary key and composite key?
+* What is `DB index`? How does it work?
+* What are types/classes of indexes?
+* What are indexes used for?
+* What are props and cons of indexes?
+* What is the difference between clustered and non-clustered indexes?
+* Does it make sense to index data that has a small number of possible values?
+* What is `normalization`?
+* What normalization is used for?
+* What is `de-normalization`? What are the cases to use it?
+* What are the `normal forms`?
+* What are the requirements for the first three normal forms?
+* What are `the types of links` in the database? Give examples.
+* What are `stored procedures` used for?
+* What is `transaction` is RDBS? What `ACID` stands for?
+* What are `Isolation levels` (reading)?
+* What propagation types do you know?
+* How are indexes represented inside the database?
+* What are the RDBS `triggers`? Where can they be used?

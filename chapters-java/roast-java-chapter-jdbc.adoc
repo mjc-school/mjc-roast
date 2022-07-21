@@ -1,0 +1,49 @@
+== JDBC
+* What is `JDBC`?
+* What are the benefits of using JDBC?
+* What is a JDBC URL?
+* What are the parts of JDBC?
+* List the main JDBC classes and interfaces.
+* List the basic data types used in JDBC. How are they related to Java types?
+* Describe the basic steps for working with a database using JDBC.
+* How to register the JDBC driver?
+* What classes are responsible to run SQL queries?
+* What transaction isolation levels are supported in JDBC?
+* What are the database queries with?
+* How does `Statement` differ from `PreparedStatement`?
+* How are database queries and results processed?
+* How to call a `stored` procedure?
+* How to close a database connection?
+* Can you explain the architecture of JDBC?
+* What is a driver in JDBC? Why it is required?Why is a JDBC driver required? What is the use of the JDBC driver?
+* How many types of drivers are available? Which drivers have you worked with? What is a Type 4 driver?
+* Explain in detail types of drivers
+* Can you explain the procedure to connect to a DB? What are the steps to connect to a database?
+* What are the ways to register the driver?
+* Explain the difference between Class.forName() and DriverManager.registerDriver()
+* JDBC API. If JDBC is an API, who provides the implementation?
+* Can you list different interfaces of JDBC API?
+* What is the standard process to obtain a DB connection? How to obtain JDBC?
+* How to obtain a generated Primary Key (PK) from a DB?
+* How to use CallableStatement? How to call a procedure using CallableStatement?
+* What is ResultSet? How to obtain ResultSet?
+* What functionalities ResultSet provides? Which of the functionalities of ResultSet have you worked with?
+* How to find ResultSet has a data or it is empty?
+* What is scrollable ResultSet?
+* One can fire a query using the Statement instance, is it possible to insert a row to a DB without using statement or firing query?
+* If ResultSet is with a default working mechanism and one tries to update the data, what will happen?Which kind of an exception would normally occur in JDBC, and how to handle it?
+* What is transaction management in JDBC?
+* What do you mean by ACID properties of transaction  management?
+* Why the application needs transaction management?
+* Can you explain how transaction management increases the speed or performance of an application?
+* What are the types of transaction?
+* How to provide transaction management in JDBC?
+* What are commit() and rollback() methods?
+* What is `Savepoint`? How to use it?
+* What is metadata? What is `DatabaseMetaData` and `ResultSetMetaData`?
+* What is BatchUpdate? How to perform batch processing?
+* What is connected and disconnected architecture?
+* What is `RowSet`?
+* What are different types of `RowSet`?
+* `RowSet` is an interface. So, what are its types and implementation classes?
+* What is `SQLTimeoutException`?

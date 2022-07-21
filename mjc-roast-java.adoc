@@ -1,0 +1,63 @@
+= Knowledge Roasting: Java Core(version 2.3)
+Dzmitry Marudau <dzmitry_marudau@epam.com>
+July 21, 2022: version 1.0
+:toc:
+:icons: font
+:url-quickref: https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/
+
+== Changelog
+|===
+|Version|Author|Date|Description
+|1.0|Dzmitry Marudau|July 21, 2022|Version 1.0
+
+|===
+<<<
+
+include::chapters-java/roast-java-chapter-oop.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-sql.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-jdbc.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-web-basics.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-html-css-js.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-servlets.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-collections.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-memory-management.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-errors-and-exceptions.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-threading.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-synchronization.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-functional-programming.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-testing.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-generics.adoc[]
+<<<
+
+include::chapters-java/roast-java-chapter-misc.adoc[]
+<<<
+
+
+
+

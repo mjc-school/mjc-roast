@@ -1,0 +1,308 @@
+== COLLECTIONS
+
+=== Fundamentals
+* Explain collections?
+* How collections and Generics related?
+* Can you use collections with the primitive types? How can you use collection with the primitive types?
+* Explain difference between collections and arrays?
+* What is the benefit of collection framework?
+* What are the different components of collection framework?
+* Why should you write code against the collection interface and not concrete implementation?
+* What are the different algorithms supported by the collection framework?
+* Which search algorithm is used to search keys?
+* How is the shuffling algorithm used?
+
+=== Types of the collections
+* What are the different collection types?
+* Define Set collection Type?
+* Define List collection Type?
+* Define Queue collection Type?
+* Define Deque collection Type?
+* Define Map collection Type?
+* What is the difference between Queue and Deque?
+
+=== Sets
+* Can you add duplicate elements in a Set?
+* Which collection type should you use when ordering is not a requirement? Why?
+* Can you add a null element to a Set?
+* Which Set class should you use to maintain order of insertion?
+* What happens to ordering, if same element is inserted again in a Set? Will it maintain its original position or inserted at the end?
+* Which Set class should you use to ensure ordering of the elements?
+* Which Set class should you use when you need to traverse in both the directions?
+
+=== Lists
+* Can you add duplicate elements to a List?
+* Can you add null element to a list?
+* In which scenarios would you use ArrayList: frequent add/update or frequent reading?
+* In which scenarios would you use LinkedList: frequent add/update or frequent reading?
+* Between ArrayList and LinkedList, which one consumes more memory? Why?
+* Between ArrayList and LinkedList, which one would you prefer for frequent random access? Why?
+
+.Why `ArrayList` was added when `Vector` was since 1.0?
+[%collapsible]
+====
+* All methods of Vector are synchronized, but there is no synchronization for ArrayList;
+* By default, a Vector doubles its size when the memory is allocated for the elements runs out. ArrayList increases its size only by half.
+* Vector is obsolet and is not recommended to use, there are alternatives for it.
+====
+
+=== Queues/Dequeues
+* What is the purpose of Queue?
+* How’s Deque different from Queue?What is priority queue?
+* What is the criterian to remove element from priority queue?
+* What is a Delay Queue?
+* What is a Blocking Queue?
+* Which Queue is a thread safe queue?
+* Which Queue implements Producer-Consumer pattern?
+* Explain difference between Blocking Queue and Transfer Queue?
+* Which Queue is capacity bounded to allows only the specified number of elements in Queue? What happens if you try to put more than its capacity.
+
+=== Maps
+* How Map is different from other collections?
+* Can you add a null value as key to a Map?
+* Can you guarantee ordering of elements in HashMap?
+* How HashMap is able to provide constant-time performance for get and put operations?
+* What is the difference between HashMap and LinkedHashMap?
+* If insertion order is to be maintained, which one would you use: LinkedHashMap or HashSet ? Why?
+* What is `WeakHashMap`?
+* When you want to maintain ordering of key, which Map class would you use?
+* Which Map class would you use to access it in both ascending and descending order?
+* Which Map implement is optimized for thread safety?
+* How does ConcurrentHashMap implements scalability, still maintaining a good performance?
+* Why the key used for Map and the value used for Set should be of immutable type?
+* What are the disadvantages of exposing internal collection object to the caller?
+* Which collection is best if you want to traverse the collection in sorted order?
+
+=== Hashing
+* What are the different collections types in Java that use hashCode and equals methods? Why do these collections type use hashCode and equals method?
+* When you override hashCode() method, why should you also override equals() method?
+* Why do you need to override hashCode() method, when hashCode() method is already present in the java.lang.Object class?
+* Why should an object return the same hash-code value every time during its lifetime?
+* Is it necessary that an object returns the same hash-code every time program runs?
+* Is it necessary that two equal object return the same hash-code?
+* Can two objects, even when they are not equal, still have the same hash-code?
+* What is the purpose of calculating hash-code?
+* What is the purpose of equals method?
+* If two objects have the same hash code, how are these stored in hash buckets?
+* If two objects have different hash code, do you still need equals method?
+* If two objects have the same hash code, then how equals method is used?
+
+=== `HashTable` vs `HashMap`
+* What is the purpose of HashTable and HashMap?
+* What is the difference between HashTable and HashMap?
+* How does HashTable and HashMap store objects?
+* Why HashMap is better for single threaded application?
+* Why performance of HashMap is better than HashTable?
+* How can you use HashMap in a multi-threaded environment?
+
+=== Synchronized vs Concurrent Collections
+* What is the purpose of Synchronized and Concurrent collections?
+* What is collection synchronization?
+* What is collection concurrency?
+* How do you achieve collection synchronization?
+* In case of composite operation, which needs to invoke multiple methods to complete the operation, how can you ensure synchronized access to a collection?
+* How do you achieve collection concurrency?
+* How does ConcurrentHashMap provide concurrent access to multiple threads?
+* Why performance of ConcurrentHashMap is better despite the fact that it allows simultaneous writes from multiple threads?
+* Which one would you prefer between ConcurrentHashMap and HashTable? Why?
+
+=== Comparing & sorting
+* What is the difference between Comparable Interface and Comparator Class?
+* When would you implement Comparable Interface to sort a collection?
+* When do you use Comparator Class to sort a collection?
+
+=== Iterating
+* Explain different ways to iterate over collection?
+* Can you modify collection structure while iterating using for-each loop?
+* Can you modify a collection element value while iterating using for-each loop?
+* What are the limitations with for-each loop, with respect to navigation direction?
+* What is difference between for-each loop and Iterator, with respect to navigation
+* direction?
+* Can you modify collection structure while iterating using an Iterator?Can you modify a collection element value while iterating using an Iterator?
+* Between for-each loop and for loop, which one would you prefer? Why?
+* Why Iterators are considered more thread safe?
+* Explain the concept of providing Data Independent Access to collection?
+* How can you design your class to provide Data Independent Access to the collections
+* that are internally used in your class?
+* What is the meaning of term fail-fast in context of collection iteration?
+* What is the benefit of a fail-fast iterator?
+* What are fail safe iterator?
+
+.How Iterable, Iterator adn «for-each» are connected?
+[%collapsible]
+====
+TODO
+====
+
+=== PRACTICAL TASKS: Collections
+
+.Let's organize the most important interfaces that define collections and their behaviour
+[%collapsible]
+====
+[source,java]
+----
+Collection
+Queue
+BlockingQueue
+TransferQueue
+BlockingDeque
+Deque
+BlockingDeque
+List
+Set
+SortedSet
+NavigableSet
+Map
+SortedMap
+----
+====
+
+.Let's organize the most important interfaces and classes that define collections and their behaviour
+[%collapsible]
+====
+[source,java]
+----
+Collection
+Queue
+BlockingQueue
+TransferQueue
+BlockingDeque
+Deque
+BlockingDeque
+List
+ArrayList
+LinkedList
+Vector
+Stack
+CopyOnWriteArrayList
+Set
+SortedSet
+NavigableSet
+Map
+IdentityHashMap
+WeakIdentityHashMap
+ConcurrentMap
+ConcurrentHashMap
+HashMap
+LinkedHashMap
+EnumMap
+SortedMap
+NavigableMap
+TreeMap
+WeakHashMap
+HashTable
+Properties
+----
+====
+
+[%collapsible]
+====
+[source,java]
+----
+Collection
+    Queue
+        BlockingQueue
+            TransferQueue
+            BlockingDeque
+        Deque
+            BlockingDeque
+    List
+        ArrayList
+        LinkedList
+        Vector
+            Stack
+        CopyOnWriteArrayList
+    Set
+        SortedSet
+        NavigableSet
+Map
+    IdentityHashMap
+    WeakIdentityHashMap
+    ConcurrentMap
+        ConcurrentHashMap
+    HashMap
+        LinkedHashMap
+    EnumMap
+    SortedMap
+        NavigableMap
+            TreeMap
+    WeakHashMap
+    HashTable
+        Properties
+----
+====
+
+.Let's organize collections which implement RandomAccess
+[%collapsible]
+====
+[source,java]
+----
+RandomAccess
+    ArrayList
+    Vector
+    Stack
+    CopyOnWriteArrayList
+    Collections.EmptyList
+    Collections.SingletonList
+    Arrays.ArrayList
+    Collections.synchronizedList(SynchronizedRandomAccessList)
+    Collections.subList(CopiesList)
+    Collections.unmodifiableList(UnmodifiableRandomAccessList)
+----
+====
+
+.What interface do objects in the TreeSet have to implement, if you don't construct it with a Comparator?
+[%collapsible]
+====
+[source,java]
+----
+java.lang.Comparable
+----
+====
+
+.What data structure is used to build up the binary tree inside TreeSet?
+[%collapsible]
+====
+[source,java]
+----
+- AVL Tree
+- Red-Black Tree [x]
+- Unbalanced binary tree
+----
+====
+
+.What is the computational time complexity for discovering if the TreeSet contains an element?
+[%collapsible]
+====
+[source,java]
+----
+- O(1)
+- O(log n) [x]
+- O(n)
+- O(n * log n)
+----
+====
+
+.What is the computational time complexity for adding an element to a TreeSet?
+[%collapsible]
+====
+[source,java]
+----
+- O(1)
+- O(log n) [x]
+- O(n)
+- O(n * log n)
+----
+====
+
+.What collection does TreeSet use internally to build up the red-black tree?
+[%collapsible]
+====
+[source,java]
+----
+- LinkedHashMap
+- ArrayList
+- TreeMap [x]
+- ConcurrentSkipListMap
+----
+====

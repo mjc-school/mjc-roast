@@ -1,0 +1,180 @@
+== GENERICS
+
+* What is `Generics`?
+* What are the various benefits that Generics provide to the Java collection framework?
+* What is the meaning of the statement that `Generics is compiler support`? Are Generics not available runtime?
+* What are the parameter `naming convention` that is generally used in `Generics`?
+* What are the advantages of using generic methods and classes?
+* What are `Type Wildcards` in Generics?
+* How are the different `Type Wildcards` used in generics?
+* Explain `Upper Bound` type wildcard?
+* Explain `Lower Bound` type wildcard?
+* What is `automatic type inference` in Generics? What is the `diamond operator` in Generics?
+* Explain `Generics` method?
+* Can you add a Generic method to a non-Generic type?
+* What are the benefits of defining bounded type as method parameters?
+* How’s compile type safety enforced by Generics?
+* What are `reifable` types?
+* What are `non-reifable` types?
+* What is `type erasure`?
+* What would happen if type erasure is not there?
+* Why can’t you assign a Generic collection object of sub type to a Generic collection object of super type?
+* Why it’s allowed to assign an array object of sub type to an array object of super type? Are Java array more polymorphic than Generics?
+* Explain `co-variance`?
+* Why can’t you add an element of subtype to a generic defined with `Upper Bound` type wildcard?
+* Explain `contra-variance`?
+* Why can’t you read element from a Generic defined with lower bound type wildcard?
+* When should you use `co-variance`?
+* When should you use `contra-variance`?
+* Is It Possible to Declared a `Multiple Bounded Type Parameter` (e.g. Cage<T extends Animal & Comparable>)&
+
+=== PRACTICAL TASKS: Generics
+
+.Can we do the following
+[%collapsible]
+====
+[source,java]
+----
+public class Test {
+
+    public static void main(String... args) {
+        List<Object> list = new ArrayList<String>();
+        List<? extends Object> list = new ArrayList<String>();
+        List<? super String> list = new ArrayList<Object>();
+    }
+}
+----
+====
+
+.Generics basics
+[%collapsible]
+====
+[source,java]
+----
+class Vehicle {}
+class Car extends Vehicle {}
+class Bike extends Vehicle {}
+public class NodeId<T> {
+    private final T Id;
+
+    public NodeId(T id) {
+        this.Id = id;
+    }
+    public T getId() {
+        return Id;
+    }
+}
+public interface List<E> {
+    void add(E x);
+    Iterator<E> iterator();
+}
+
+public class Test {
+    public static void main(String... args) {
+        List<Integer> integerList = new ArrayList<Integer>(); //L1
+
+        NodeId<Object> objectNodeId = new NodeId<>(new Object()); //L2
+        // Parameter Type - Integer
+        NodeId<Integer> integerNodeId = new NodeId<>(1); //L3
+        // what is happening here?
+        objectNodeId = integerNodeId; //L4
+    }
+
+}
+----
+====
+
+
+.Type Wildcards
+[%collapsible]
+====
+[source,java]
+----
+class Vehicle {}
+class Car extends Vehicle {}
+class Bike extends Vehicle {}
+
+public class Test {
+    public static void main(String... args) {
+        List<Integer> integerList = new ArrayList<>();
+    }
+
+    public void addVehicles1(List<?> vehicles) {
+        // do something
+    }
+    public void addVehicles2 (List<? extends Truck> vehicles) {
+        // do something
+    }
+    public void addIds1(List<? extends Number> T) {}
+    public void addIds2(List<? super Float> T) {}
+
+}
+----
+====
+
+
+.Java Generics vs Java Array
+[%collapsible]
+====
+[source,java]
+----
+class Vehicle {}
+class Car extends Vehicle {}
+class Bike extends Vehicle {}
+
+public class Test {
+    public static void main(String... args) {
+        // Generics
+        List<Bike> bikes = new ArrayList<Bike>(); //L1
+
+        List<Vehicle> vehicles = bikes; //L2
+        vehicles.add(new Car()); //L3
+
+        Bike bike = vehicles.get(0); //L4
+
+        // Arrays
+        Car[] cars = new Car[3];  //L5
+        Vehicle [] vehicles = cars; //L6
+        vehicles[0] = new Bike(); //L7
+    }
+}
+----
+====
+
+.Co-variance
+[%collapsible]
+====
+[source,java]
+----
+class Vehicle {}
+class Car extends Vehicle {}
+class Bike extends Vehicle {}
+
+public class Test {
+    public static void main(String... args) {
+        List<? extends Vehicle> vehicles = new ArrayList<Bike>();
+        Vehicle vehicle = vehicles.get(0);
+        vehicles.add(new Bike());
+    }
+}
+----
+====
+
+.Contra-variance
+[%collapsible]
+====
+[source,java]
+----
+class Vehicle {}
+class Car extends Vehicle {}
+class Bike extends Vehicle {}
+
+public class Test {
+    public static void main(String... args) {
+        List<? super Car> cars = new ArrayList<Vehicle>();
+        cars.add(new Car());
+        Car vehicle = cars.get(0);
+    }
+}
+----
+====

@@ -1,0 +1,269 @@
+== OOP
+
+.What are the main programming paradigms?
+[%collapsible]
+====
+* Imperative programming
+** procedural programming
+** structured programming
+** object-oriented programming(OOP)
+* Declarative programming
+* Functional programming
+* Reactive Programming
+====
+
+.What does abbreviation `OOP` mean?
+[%collapsible]
+====
+Object Oriented Programming.
+====
+
+.What are the advantages and disadvantages of an object-oriented programming approach??
+[%collapsible]
+====
+Answer
+====
+
+.What are the basic principles of OOP??
+[%collapsible]
+====
+* `Incapsulation` is implementation hiding.
+* `Inheritance` is the creation of a new entity based on an existing one.
+* `Polymorphism` is the ability to have different forms for the same entity.
+* `Abstraction` is a set of common characteristics.
+* `Reuse` - everything listed above works for code reuse.
+
+IMPORTANT: This is the only correct order of OOP paradigms, since each subsequent one uses the previous ones.
+====
+
+.What is `Incapsulation`?
+[%collapsible]
+====
+Answer
+====
+
+.What is `Inheritance`?
+[%collapsible]
+====
+Answer
+====
+
+.What is `Polymorphism`?
+[%collapsible]
+====
+Answer
+====
+
+.What is `Abstraction`?
+[%collapsible]
+====
+Answer
+====
+
+.Tell us about the basic concepts of OOP: `class`, `object`, `interface`.?
+[%collapsible]
+====
+* A `class` is a way of describing an entity, defining the state and behavior that depends on this state, as well as the rules for interacting with this entity (contract). +
+From a programming point of view, a class can be viewed as a set of data (fields, attributes, class members) and functions to work with them (methods). +
+From the point of view of the structure of the program, a class is a complex data type.
+
+* An `object` (instance) is a separate representative of a class with a specific state and behavior that is completely determined by the class. Each object has specific attribute values and methods that operate on those values based on the rules defined in the class.
+
+* An `interface` is a collection of class methods available for use. The interface of a class will be a set of all its public methods together with a set of public attributes. Basically, an interface specifies a class, clearly defining all possible actions on it.
+====
+
+.What do the expressions `IS` and `HAS` mean in terms of OOP principles??
+[%collapsible]
+====
+* `IS` implies inheritance.
+* `HAS` means an association (aggregation or composition).
+====
+
+.What's the difference between composition and aggregation??
+[%collapsible]
+====
+* `Association` refers to the relationship between objects. Composition and aggregation are special cases of the `part-whole` association.
+* `Aggregation` assumes that objects are connected in a `part-of` relationship.
+* `Composition` is a stricter variant of aggregation. In addition to the `part-of` requirement, the condition is imposed that a `part` instance can be included in only one whole (or not included anywhere), while in the case of aggregation, a `part` instance can be included in several integers.
+====
+
+.What are `static` and `dynamic` linking??
+[%collapsible]
+====
+* Attaching a method call to the body of a method is called `binding`. If the binding is done by the compiler (linker) before starting the program, then it is called `static` or `early binding`.
+
+* In turn, `late` binding is binding carried out directly at runtime, depending on the type of object. Late binding is also called `dynamic` or `runtime` binding. In languages that implement late binding, there must be a mechanism for determining the actual type of the object at runtime to invoke the appropriate method. In other words, the compiler does not know the type of the object, but the method invocation mechanism determines it and calls the corresponding method body. `Late-binding` is *language-specific*, but it's easy to assume that some additional information must be included in objects to implement it.
+
+* All Java methods use late (dynamic) binding, unless the method has been declared `final` (private methods are final by default).
+====
+
+.`Interface` vs `Abstract` Class?
+[%collapsible]
+====
+* by extending the abstract class you can not extend another class because Java does not support multiple inheritances but you can implement multiple inheritances in Java.
+* it is impossible to create a non-abstract method in an interface, cause every method in an interface is by default abstract, but it is possible to create a non-abstract method in the abstract class.
+* interface is better suited for Type declaration and abstract class is more suited for code reuse and evolution perspective
+* abstract classes are slightly faster than the interface because the interface involves a search before calling any overridden method in Java
+* when you add a new method in the existing interface it breaks all its implementation and you forced to provide an implementation in all clients. By using an abstract class you can provide a default implementation for a new method in the superclass without breaking existing clients.
+
+====
+
+.What is the difference between classes and interfaces?
+[%collapsible]
+====
+* Typically, the answer is "Contract vs Implementation" with some explanations. +
+* Nuances:
+** default/static methods in interfaces starting from Java 8.
+** abstract classes and interfaces.
+** multi-implementation vs single extends
+** stateful vs stateless(understanding of this is very important concept)
+** "diamond" problem
+** "diamond" problem with default methods of interfaces
+** why do we need default methods
+** backward compatibility
+** can default method override Object's method
+====
+
+.Can `abstract` class have abstract methods?
+[%collapsible]
+====
+Yes
+====
+
+.`override` vs `overload`?
+[%collapsible]
+====
+* `override` — the ability to override the behavior of a method in descendant types
+* `overload` — the ability to override a method with the same name, but with a different set of arguments
+====
+
+.Name `Object` methods?
+[%collapsible]
+====
+* toString()
+* equals()
+* hashCode()
+* wait()
+* notify()
+* notifyAll()
+* finalize() — deprecated(Java 9+)
+* getClass()
+====
+
+.Is it possible to destroy object in Java?
+[%collapsible]
+====
+Discuss GC, destructor, finalize, Runtime.getRuntime().gc(), null references.
+====
+
+.Difference between String/StringBuilder/StringBuffer(**)?
+[%collapsible]
+====
+* `String` — immutable byte array
+* `StringBuilder` — helper-class to build strings, thread unsafe
+* `StringBuffer` — the same as StringBuilder, thread safe
+====
+
+* What is a class?
+* What is an object?
+* What are the characteristics of an object?
+* What is a constructor and its role?
+* Can we have a private constructor? Why and when?
+* Why all the instance variables have default values in Java?
+* What are the accessor and mutator methods in Java, and what is their significance?
+* What are the different ways to create objects?
+* How to create an object using the newInstance method?
+* How to create a copy of an existing object?
+* How to use the clone method to create a new object?
+* When your code will throw the CloneNotSupported Exception?
+* How to serialize an object?
+* What is de-serialization, and how it generates a new object?
+* What are the different access specifiers present in Java? Can you explain their difference?
+* Can we apply a private modifier to class?
+* What is association in Java?
+* What is composition in Java?
+* What is the difference between composition and aggregation?
+* What is difference between is-a-kind relation and has-a-kind relation in Java?
+* Can you explain when to use is-a-kind relationship and when to use has-a-kind relationship in Java?
+* How do you explain the term `coupling`?
+* How do you explain the term `cohesion`?
+* What do you mean by loose coupling?
+* What do you mean by tight coupling?
+* What is abstract class?
+* Can the abstract class contain constructors?
+* Why abstract classes provide constructors even though they are not instantiated?
+* What are concrete methods and abstract methods?
+* Can we declare all the methods of abstract class as a concrete method?
+* Can we have abstract methods as private?
+* Can we declare abstract methods as static?
+
+.What does it mean `final` in Java?
+[%collapsible]
+====
+* The keywrod `final` can be applied to class, method, variables(inc. method parameters).
+* `final class` = no subclasses, inheritance is forbidden. It is useful to create unmodifable objects.
+====
+
+* Can we declare an abstract class as final?
+* What is a final class, and why one need to declare it?
+* What is a final method?
+* What is use of the final keyword?
+* Can we make the reference as final?
+* What does it mean?
+* Can interfaces have a constructor? How it is different than the abstract classes?
+* Can we declare an interface with the abstract keyword?
+
+.What is the default method in an interface?
+[%collapsible]
+====
+It is implemented method in interfaces for backward compatibility.
+====
+
+* Can an interface have more than one method as default implemented methods?
+* What is polymorphic reference?
+* What is significance of a polymorphic reference, and how would you achieve the same?
+* If Object is a cosmic superclass, what is wrong if you refer every object by it?
+* Can we extend more than one class?
+* How do you achieve multiple inheritance in Java?
+* If your class implements two interfaces and both the interfaces declare similar methods, which method will be invoked? Is it permitted?
+* What is use of a static variable?
+* What is use of a static method?
+* Can we use a non-static method to process static variables?
+* Can we use a static method to process instance variables?
+* Can we declare static and instance variables with same name?
+* Can I apply static anywhere apart from variables?
+* What is the use of this keyword?
+* Explain the significance of the super keyword
+* Why the super keyword must be located as the first line o the constructor?
+* Do we have the destructors in Java?
+* Which methods are present in the Object class that can be overridden?
+* What is the equals() method, and how is it used?
+* Which is a cosmic super class in Java?
+* What is the difference between an equal operator (= =) and equals method?
+* What is a var argument? Where can it be used?
+* What are the different rules for declaring the var argument method?
+* What is the difference between using the var argument and array as a method argument?
+* What do you mean by method overloading?
+* Can we overload a static method?
+* What is method overriding?
+* What are rules of method overriding in Java?
+* Can we override the static method?
+* What is a co-variant return type?
+* Can we change the return type of the overridden method?
+* What is a marker interface? * What is use of a marker interface?
+* What is typecasting in Java, and which are the different types of typecasting available in Java?
+* What are the types of variables in Java? Also explain their scope.
+* What is an instance initializer block in Java?
+* What is difference between a static initializer block and instance initializer block in Java?
+* Can you explain the concept of wrapper classes in Java?
+* What is auto-boxing and auto un-boxing? In which scenario are they observed?
+* What is the use of an immutable object? Why we should create such an object?
+* What is an enum to you?
+* Can enum extend any other class?
+* Can we write an enum that implements an interface?
+* Can we declare constructors within enum?
+* Why the constructor of enum is kept as private?
+* Can we instantiate enum using the new keyword?
+* Explain some important methods of enum in Java
+* Explain the use of static import
+* Which package is available as a default package for every Java class?

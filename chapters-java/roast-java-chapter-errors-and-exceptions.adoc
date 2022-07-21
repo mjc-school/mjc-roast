@@ -1,0 +1,254 @@
+== ERRORS AND EXCEPTIONS
+
+* What is an `Exception`?
+* What are some advantages of exceptions
+* What Is the Purpose of the `Throw` and `Throws` Keywords?
+* Explain root level exception super classes in Java?
+* Why would you want to subclass an exception?
+* Which super class should you sub class to create checked exception?
+* Which super class should you sub class to create unchecked exception?
+* What are `checked exceptions`?
+* What are `unchecked exceptions`?
+* What is the difference between a checked and an unchecked exception?
+* What is the difference between an exception and error?
+* What `types of exceptions` does the Error class in Java defines?
+* How can you handle an exception?
+* How can you catch multiple exceptions?
+* How can you handle checked exceptions?
+* What happens if an exception is un-handled?
+* What are the different ways to handle checked exceptions?
+* Which exception classes can you use in the catch block to handle both checked and unchecked exceptions?
+* How do you make choice between checked and unchecked exceptions?
+* Can you recover from unchecked exception?
+* How can you avoid unchecked exception?
+
+.Can you throw checked exceptions from static block? Why?
+[%collapsible]
+====
+You cannot throw because there is no specific place to catch it and it’s called only once. +
+You have to use try/catch to handle checked exception.
+====
+
+* What should you do to handle an Error?
+* Describe some exception handling best practices?
+* What are the pitfalls of suppressing an exception?
+* What is the problem with showing a generic error message?
+* What is the downside of swallowing an exception? What are the pitfalls of handling multiple exceptions in a single catch block?
+* What would you do if an exception is thrown from a source that contains sensitive information?
+What would you log in such case and what message would you show to the user?
+* What is the pitfall of wrapping all the exceptions into a Generic exception class?
+* Why you shouldn’t use exceptions to control the flow of program execution?
+* Should you log all the exceptions? Why?
+* Why you shouldn’t use Throwable or some other root level class to catch exceptions?
+* What should be the criteria to select the code block that should be enclosed into a try block?
+* If a nested call is made, which passes through multiple methods, would you implement try-catch in each method? Why?
+* Which java construct can you use to close the system resources automatically?
+* To use a class object within try-with-resource construct, which Interface should the class inherit from?
+* What is `exception chaining`?
+* What is a `stacktrace` and how does it relate to an exception?
+
+.What are the rules we need to follow when overriding a method that throws an exception?
+[%collapsible]
+====
+- When the parent class method doesn't throw any exceptions, the child class method can't throw any checked exception, but it may throw any unchecked. +
+[source,java]
+----
+class Parent {
+    void doSomething1() {
+        // some logic
+    }
+    void doSomething2() {
+        // some logic
+    }
+}
+
+class Child extends Parent {
+    void doSomething1() throws IllegalArgumentException {
+        // some logic
+    }
+    void doSomething2() throws IOException {
+        // Compilation error
+    }
+}
+----
+- When the parent class method throws one or more checked exceptions, the child class method can throw any unchecked exception; all, none or a subset of the declared checked exceptions, and even a greater number of these as long as they have the same scope or narrower. +
+[source,java]
+----
+class Parent {
+    void doSomething() throws IOException, ParseException {
+        // some logic
+    }
+
+    void doSomethingElse() throws IOException {
+        // some logic
+    }
+
+    void doSomethingWithFile() throws FileNotFoundException {
+        // some logic
+    }
+}
+
+class Child extends Parent {
+    void doSomething() throws IOException {
+        // some logic
+    }
+
+    void doSomethingElse() throws FileNotFoundException, EOFException {
+        // some logic
+    }
+
+    void doSomethingWithFile() throws IOException {
+        // Compilation error
+    }
+}
+----
+- When the parent class method has a throws clause with an unchecked exception, the child class method can throw none or any number of unchecked exceptions, even though they are not related. +
+[source,java]
+----
+class Parent {
+    void doSomething() throws IllegalArgumentException {
+        // some logic
+    }
+}
+
+class Child extends Parent {
+    void doSomething()
+      throws ArithmeticException, BufferOverflowException {
+        // some logic
+    }
+}
+----
+====
+
+=== PRACTICAL TASKS: Exceptions and Errors
+
+.What exception will be thrown executing the following code block?
+[%collapsible]
+====
+[source,java]
+----
+Integer[][] values = { { 1, 2 }, { null }, { 3, 4, 5 } };
+System.out.println("value = " + values[1][1].intValue());
+----
+====
+Answer: It throws an ArrayIndexOutOfBoundsException since we're trying to access a position greater than the length of the array.
+
+.Exception chaining example
+[%collapsible]
+====
+[source,java]
+----
+try {
+    task.readConfigFile();
+} catch (FileNotFoundException ex) {
+    throw new TaskException("Could not perform task", ex);
+}
+----
+====
+
+.Will the following code compile?
+[%collapsible]
+====
+[source,java]
+----
+public class Test {
+    void doSomething() {
+        // some code
+        throw new RuntimeException(new Exception("Chained Exception"));
+    }
+}
+----
+====
+Answer: Yes. When chaining exceptions, the compiler only cares about the first one in the chain and, because it detects an unchecked exception, we don't need to add a throws clause.
+
+.Is there any way of throwing a checked exception from a method that does not have a throws clause?
+[%collapsible]
+====
+[source,java]
+----
+public class Test {
+    public <T extends Throwable> T sneakyThrow(Throwable ex) throws T {
+        throw (T) ex;
+    }
+
+    public void methodWithoutThrows() {
+        this.<RuntimeException>sneakyThrow(new Exception("Checked Exception"));
+    }
+}
+----
+====
+Answer: Yes. We can take advantage of the type erasure performed by the compiler and make it think we are throwing an unchecked exception, when, in fact; we're throwing a checked exception.
+
+
+.Can you throw any exception inside a lambda expression's body?
+[%collapsible]
+====
+[source,java]
+----
+//When using a standard functional interface already provided by Java, you can only throw unchecked exceptions because standard functional interfaces do not have a “throws” clause in method signatures:
+List<Integer> integers = Arrays.asList(1, 0, 2, 0, 3, 4);
+integers.forEach(i -> {
+    if (i == 0) {
+        throw new IllegalArgumentException("Zeros are not allowed");
+    }
+    System.out.println(Math.PI / i);
+});
+// if you are using a custom functional interface, throwing checked exceptions is possible
+@FunctionalInterface
+public static interface CheckedFunction<T> {
+    void apply(T t) throws Exception;
+}
+
+public void processTasks(
+  List<Task> taks, CheckedFunction<Task> checkedFunction) {
+    for (Task task : taks) {
+        try {
+            checkedFunction.apply(task);
+        } catch (Exception e) {
+            // catching
+        }
+    }
+}
+
+processTasks(taskList, t -> {
+    // some code
+    throw new Exception("Something happened");
+});
+----
+====
+
+.Best practices to deal with exceptions
+[%collapsible]
+====
+* Never suppress an exception +
+it can lead your program to unsafe and unstable state.
+* Never swallow an exception +
+it may lead the application into an inconsistent state, and even worst, without recording reason for it.
+* Never throw a generic exception +
+- as it will be impossible to ascertain reason for the exception.
+* Don’t unnecessarily wrap the exception +
+- which may mask the true source.
+* Don’t catch and continue program execution +
+- with some default behaviour. Default behaviour defined today may not be valid in the future.
+* Don’t perform excessive exception handling +
+- specifically when you do not know how to completely recover from it.
+* Don’t show generic error message to user +
+- instead clean the exception handling code to report user-friendly message with suggestion about the next step.
+* Don’t put more than one exception scenarios in single try catch +
+- as it will be impossible to ascertain reason for the exception.
+* Don’t catch multiple checked exceptions in single catch block +
+- as it will be impossible to ascertain reason for the exception.
+* Don’t reveal sensitive information +
+- instead sanitize exceptions generated specifically from the sources that may reveal sensitive information.
+* Always log exception +
+- unless there is compelling reason not to do so.
+* Don’t catch `Throwable` +
+-as it will be impossible to ascertain reason for the exception
+* Don’t use exception to control the flow of execution +
+- instead use boolean to validate a condition where possible.
+* Handle different scenarios programmatically +
+- instead of putting all coding logic in try block.
+* Explicitly name the threads +
+- in a multithreaded application, it significantly eases the debugging.
+
+====

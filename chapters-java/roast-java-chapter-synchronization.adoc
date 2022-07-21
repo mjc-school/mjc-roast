@@ -1,0 +1,260 @@
+== SYNCHRONIZATION
+
+* Explain `concurrent` processing?
+* Explain `parallel` processing?
+* Explain `synchronous` processing?
+* Explain `asynchronous` processing?
+* Explain the difference between `concurrent` and `parallel` processing?
+* Explain the difference between `synchronous` and `asynchronous` processing?
+* Does `parallel` processing require multiple threads?
+
+When an application is concurrent but not parallel?::
+When application processes multiple operations simultaneously without dividing these operations further into smaller tasks.
+
+When an application is parallel but not concurrent?::
+When application processes one operation dividing the operation into smaller tasks that are processed in parallel.
+
+When an application is neither concurrent not parallel?::
+When application processes only one operation without dividing the operation into smaller tasks.
+
+When an application is both concurrent and parallel?::
+When application processes multiple operations simultaneously and also dividing these operations further into smaller tasks that are processed in parallel.
+
+* Explain `race condition` in multi-threading?
+* What is `critical section`?
+* What is `thread synchronization`?
+* What is a `memory barrier`?
+* What is the concept of `happen-before` in thread synchronization?
+* How is `synchronized` keyword used?
+* What is the difference between `synchronized method` and `synchronized block`?
+* Why synchronized block is preferred to synchronized method?
+* Does `synchronized` method locks the entire object?
+* What problem you may encounter if you call a method provided by the client, from inside the synchronized block or method?
+* What is `conditional synchronization`?
+* What is the purpose of the `wait` call?
+* What is the difference between `notify` and `notifyAll` methods?
+* When you call `notify`, with multiple threads waiting for the notification, which one will be notified?
+* Between `notify` and `notifyAll`, which one would you prefer? Why?
+* What is `volatile` field?
+* Explain the problem that `volatile` field solves?
+* Where does the `volatile` field gets stored?
+* What are `static` variables?
+* All the objects of a class share static variables. But in a multi-threaded environment; why a change made by one object to the static variable is not visible to the objects on another thread?
+* If both static and volatile variables are shared across objects, then what’s the problem a volatile variable solves?
+* How are volatile and static variables different from synchronized, as even the synchronized monitor guards the memory object?
+* What is `thread local storage`?
+* What is the kind of information should you store in `thread local storage`?
+* Why you don’t need to synchronize access to the objects that are stored in `ThreadLocal` storage? Why should you call `remove` method on `ThreadLocal` storage?
+* What is the difference between `wait` and `sleep`?
+* Why it’s possible to notify waiting object to wake but not the sleeping?
+* What is the mechanism to signal an object to come out of wait?
+* What is the purpose of thread’s `join` method?
+* Why do you need to join two threads?
+* What are `atomic classes`?
+* Why you don’t require synchronizing access to an object of atomic class?
+* Explain locking mechanism in a multi-threaded environment?
+* Do you need to acquire and release lock in same block of code?
+* Why should you prefer using `tryLock()` instead of `lock()` for Java Locks?
+* What are the benefits of using `ReadWriteLock`?
+* In which scenario would you prefer `ReadWriteLock` to any other locking mechanism?
+* What is the purpose of `synchronizers`?
+* What are the different `types of synchronizers` available in Java?
+* Explain `Barrier` synchronizer?
+* Can you reuse the same Barrier object again? How?
+* What happen if one of thread dies, for which other threads were waiting at the Barrier?
+* For what kind of work would you use Barrier?
+* Explain `Semaphore` synchronizer?
+* What happens if you call `release()` more times than `acquire()`?
+* What happens when you call `acquire`, but permit is not available?
+* How can you acquire mutually exclusive lock using `Semaphore`?
+* Where do you use `Semaphore`?
+* Explain `Phaser` synchronizer?
+* Can the number of parties registered with `Phaser` dynamically change over time?
+* Can you reuse the same `Phaser` object again?
+* Can you monitor count of registered parties with `Phaser` using some external object?
+* What is the difference between `Semaphore` and `Phaser`, with respect to number of parties that can register with it?
+* Explain `Exchanger` synchronizer?
+* How many thread are required with the `Exchanger` object?
+* What is the primary purpose of `Exchanger` synchronizer?
+* Does `Exchanger` synchronizer use the same object to exchange every time or a different object can be exchanged?
+* Explain `Latch` synchronizer?
+* Can you reuse the same `Latch` object again like `Barrier` and `Phaser`?
+* What is the mechanism of signalling a job completion to Latch?
+* Explain Executor framework?
+* What are the various capabilities of Executor framework?
+* Explain ExecutorService?
+* How can you track progress and status of executing task?
+* Does Executor service use dedicated threads to execute queued tasks?
+* Can you use Runnable object with the ExecutorService? Why?
+* How do you find if an exception is thrown in the ExecutorService?
+* Can you schedule a task to run in future with the ExecutorService?
+* With ExecutorService, how can you get results from multiple tasks?
+* What is the difference between submit() and execute() methods of ExecutorService?
+* If you use submit(), you can get any exception thrown by calling get() method on Future; whereas, if you use execute(), exception will go to UncaughtExceptionHandler.
+* How can you exit gracefully from ExecutorService?
+* What should be the criteria for configuring thread pool size? How can you set that?
+* Explain Fork-Join framework in Java?
+* How Fork-Join framework helps to optimize task execution?
+* What is the difference between RecursiveTask and RecursiveAction?
+
+Why `pre` and `post` increment operator are not thread safe?::
+Pre and post operation are multiple operations under the hood; read, increment and write. All the three are not synchronized together, so any thread context switch that happens in between, will result into undesired result.
+
+What is the difference between `Atomic` and `Volatile` variables?::
+Atomic variables provide atomic access even for the compound operation like pre and post increment operation, which is not possible if variable is declared as Volatile. Volatile just guarantees happen-before reads.
+
+=== PRACTICAL TASKS: Synchronization
+
+.Mark method as `critical section`
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    Object reference = new Object();
+
+    // Instance method marked as critical section
+    public synchronized void writeSomething1() {
+        // CODE
+    }
+    // Class method marked as critical section
+    public static synchronized void writeSomething2() {
+        // CODE
+    }
+}
+----
+====
+
+.Mark block of code as `critical section`
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    void method() {
+        // multiple threads can be here
+
+        // Code marked as critical section
+        synchronized (this) {
+            // only one thread can enter here
+        }
+        // multiple threads can execute here
+    }
+}
+----
+====
+
+.Write ThreadLocal example
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    ThreadLocal<String> threadLocal = new ThreadLocal<String>();
+
+    void method() {
+      // set value
+      threadLocal.setValue("test");
+      // get value
+      String val = threadLocal.getValue();
+      // To prevent leak, it’s a good practice to remove ThreadLocal object using remove() method.
+      threadLocal.remove();
+    }
+}
+----
+====
+
+.Conditional Synchronization with wait()
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    public void manageWaitFor(int timeInMs) throws InterruptedException {
+        synchronized (reference) {
+            if (someCondition) {
+                // wait for notification
+                reference.wait(timeInMs);
+            }
+        }
+    }
+}
+----
+====
+
+.Conditional Synchronization with wait()
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    public void manageSleepFor(int timeInMs) throws InterruptedException {
+        //pause for timeInMs
+        Thread.sleep(timeInMs);
+        //print a message
+        print("Slept for :" + timeInMs + "ms.");
+    }
+}
+----
+====
+
+.Joining Threads Sample
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    public void main(String[] args) {
+        System.out.println("A");
+        Thread thread = new Thread(SynchronizationDemo::threadMethod);
+        thread.start();
+        // current thread waits until thread completes execution
+        System.out.println("B");
+        thread1.join();
+        System.out.println("C");
+    }
+}
+----
+====
+
+.Thread safe `ReentrantLock` example with adding money to the account
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    // Create lock object
+    private Lock lockObject = new ReentrantLock();
+
+    public void addMoney() {
+        // acquire the lock
+        lockObject.lock();
+        try {
+            // some business logic
+        } finally {
+            // release the lock
+            lockObject.unlock();
+        }
+    }
+}
+----
+====
+
+.Thread safe `ReadWriteLock` example
+[%collapsible]
+====
+[source,java]
+----
+public class SynchronizationDemo {
+    // Create lock object
+    ReentrantReadWriteLock rwl = new ReentrantReadWriteLock();
+
+    public void method() {
+        // read lock
+        Lock rLock= rwl.readLock();
+        // write lock
+        Lock wLock = rwl.writeLock();
+    }
+}
+----
+====

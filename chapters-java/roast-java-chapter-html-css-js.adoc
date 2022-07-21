@@ -1,0 +1,115 @@
+== HTML/CSS/JS
+* How the browser renders HTML?
+* What are `HTML` tags?
+* Name 3-5 HTML tags and explain their purpose
+* What is DOM tree?
+* What are different types of lists in HTML?
+* What is the `class` attribute in HTML?
+* What is the significance of <head> and <body> tag in HTML?
+
+.What are the various formatting tags in HTML?
+[%collapsible]
+====
+[source,html]
+----
+<b> - makes text bold
+<i> - makes text italic
+<em> - makes text italic but with added semantics importance
+<big> - increases the font size of the text by one unit
+<small> - decreases the font size of the text by one unit
+<sub> - makes the text a subscript
+<sup> - makes the text a superscript
+<del> - displays as strike out text
+<strong> - marks the text as important
+<mark> - highlights the text
+<ins> - displays as added text
+----
+====
+
+.Describe HTML layout structure.
+[%collapsible]
+====
+[source,html]
+----
+<header>: Stores the starting information about the web page.
+<footer>: Represents the last section of the page.
+<nav>: The navigation menu of the HTML page.
+<article>: It is a set of information.
+<section>: It is used inside the article block to define the basic structure of a page.
+<aside>: Sidebar content of the page.
+----
+====
+
+* What Is CSS?
+* What is the Box model in CSS?
+* What are the advantages of using CSS?
+* What are the limitations of CSS?
+* How to include CSS in the webpage?
+* What is CSS selector?
+
+.What are the different types of Selectors in CSS?
+[%collapsible]
+====
+* Universal Selector: The universal selector works like a wildcard character, selecting all elements on a page.
+* Element Type Selector: This selector matches one or more HTML elements of the same name.
+* ID Selector: This selector matches any HTML element that has an ID attribute with the same value as that of the selector.
+* Class Selector: The class selector also matches all elements on the page that have their class attribute set to the same value as the class.
+* Descendant Combinator: The descendant selector or, more accurately, the descendant combinator lets you combine two or more selectors
+* Child Combinator: A selector that uses the child combinator is similar to a selector that uses a descendant combinator, except it only targets immediate child elements.
+* General Sibling Combinator: A selector that uses a general sibling combinator to match elements based on sibling relationships.
+* Adjacent Sibling Combinator: A selector that uses the adjacent sibling combinator uses the plus symbol (+), and is almost the same as the general sibling selector. The difference is that the targeted element must be an immediate sibling, not just a general sibling.
+* Attribute Selector: The attribute selector targets elements based on the presence and/or value of HTML attributes, and is declared using square brackets.
+====
+
+* How to include CSS in the webpage?
+* What is a Pseudo element? What is pseudo-class?
+* Difference between reset vs normalize CSS?
+* What is VH/VW (viewport height/ viewport width) in CSS?
+
+=== PRACTICAL TASKS: HTML/CSS/JS
+
+.Create simple HTML file based on set of tags?
+[%collapsible]
+====
+<footer>
+<nav>
+<head>
+<article>
+<body>
+<aside>
+<header>
+<section>
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+<h1>My First Heading</h1>
+<p>My first paragraph.</p>
+
+</body>
+</html>
+
+====
+
+
+.What are formatting tags?
+[%collapsible]
+====
+[source,html]
+----
+<b>
+<i>
+<em>
+<small>
+<sub>
+<sup>
+<del>
+<strong>
+<mark>
+<ins>
+----
+====

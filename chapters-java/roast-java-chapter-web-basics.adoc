@@ -1,0 +1,536 @@
+== The basics of WEB
+
+.What is ÙRI`?
+[%collapsible]
+====
+Uniform Resource Identifier is the full form of URI which is used for identifying each resource of the REST architecture.
+URI is of the format: `<protocol>://<service-name>/<ResourceType>/<ResourceID>` +
+There are 2 types of URI:
+- URN: Uniform Resource Name identifies the resource by means of a name that is both unique and persistent. +
+URN doesn’t always specify where to locate the resource on the internet. They are used as templates that are used by other parsers to identify the resource.
+Whenever a URN identifies a document, they are easily translated into a URL by using “resolver” after which the document can be downloaded.
+- URL: Uniform Resource Locator has the information regarding fetching of a resource from its location. +
+URLs start with a protocol (like ftp, http etc) and they have the information of the network hostname (amazon.com) and the path to the document(/index.html). It can also have query parameters.
+
+====
+
+.What is URL and its Structure?
+[%collapsible]
+====
+URL: Uniform Resource Locator has the information regarding fetching of a resource from its location. +
+URLs start with a protocol (like ftp, http etc) and they have the information of the network hostname (amazon.com) and the path to the document(/index.html). It can also have query parameters.
+====
+
+.What is HTTP?
+[%collapsible]
+====
+HTTP stands for Hyper Text Transfer Protocol
+====
+
+.What is HTTP Client and HTTP server?
+[%collapsible]
+====
+An HTTP client is a program that establishes a connection to a server to send one or more HTTP request messages. +
+An HTTP server is a program that accepts connections to serve HTTP requests by sending an HTTP response messages.
+====
+
+* What is HTTP message?
+
+.What is `HTTP Request` and `HTTP Response`?
+[%collapsible]
+====
+Communication between clients and servers is done by requests and responses:
+- A client (a browser) sends an HTTP request to the web
+- A web server receives the request
+- The server runs an application to process the request
+- The server returns an HTTP response (output) to the browser
+- The client (the browser) receives the response
+====
+
+.Can you name different `HTTP methods`?
+[%collapsible]
+====
+`HTTP Methods` are also known as `HTTP Verbs`. They form a major portion of uniform interface restriction followed by the REST that specifies what action has to be followed to get the requested resource. Below are some examples of HTTP Methods:
+
+- GET: This is used for fetching details from the server and is basically a read-only operation.
+- POST: This method is used for the creation of new resources on the server.
+- PUT: This method is used to update the old/existing resource on the server or to replace the resource.
+- DELETE: This method is used to delete the resource on the server.
+- PATCH: This is used for modifying the resource on the server.
+- OPTIONS: This fetches the list of supported options of resources present on the server.
+
+Notes:
+- The POST, GET, PUT, DELETE corresponds to the create, read, update, delete operations which are most commonly called CRUD Operations.
+- GET, HEAD, OPTIONS are safe and idempotent methods whereas PUT and DELETE methods are only idempotent. POST and PATCH methods are neither safe nor idempotent
+====
+
+.Differentiate between the `GET` and `POST` method?
+[%collapsible]
+====
+TODO
+====
+
+.Differentiate between the `PUT` and `POST` method?
+[%collapsible]
+====
+|PUT | POST
+| PUT methods are used to request the server to store the enclosed entity in request. In case, the request does not exist, then new resource has to be created. If the resource exists, then the resource should get updated. | POST method is used to request the server to store the enclosed entity in the request as a new resource.
+| The URI should have a resource identifier. Example: PUT /users/{user-id} | The POST URI should indicate the collection of the resource. Example: POST /users
+| PUT methods are idempotent. |  POST methods are not idempotent.
+| PUT is used when the client wants to modify a single resource that is part of the collection. If a part of the resource has to be updated, then PATCH needs to be used. | POST methods are used to add a new resource to the collection.
+| The responses are not cached here despite the idempotency. | Responses are not cacheable unless the response explicitly specifies Cache-Control fields in the header.
+| In general, PUT is used for UPDATE operations.  | POST is used for CREATE operations.
+====
+
+.What is the difference between `PATCH` an `PUT`?
+[%collapsible]
+====
+It is a common misconception among engineers that PUT and PATCH operations yield the same result. +
+They are similar in updating resources, but they each perform the updates differently. +
+`PUT` operations update resources by sending updates to the entire resource. +
+`PATCH` operations apply partial updates to only the resources that need updating. Resulting in PATCH calls that produce smaller payloads, and improve performance at scale.
+* Even though PATCH calls can limit the request size, you should note that it is not Idempotent. Meaning, it is possible that a PATCH can yield different results with a series of multiple calls. So, you should carefully and deliberately consider your application for using PATCH requests, and make sure that they are idempotently implemented if needed. If not, use PUT requests.
+====
+
+.What is `HTTP status code`?
+[%collapsible]
+====
+Make use of the HTTP status code, and only use the response body to provide error details. +
+A response’s status is specified by its status code: +
+- 1xx for informational responses, +
+- 2xx for successful responses, +
+- 3xx for redirections, +
+- 4xx for client errors +
+- 5xx for server errors
+
+Use HTTP status codes consistently, f.e.: +
+- GET: 200 OK
+- PUT: 200 OK
+- POST: 201 Created
+- PATCH: 200 OK
+- DELETE: 204 No Content
+====
+
+.Name most commonly used status codes:
+[%collapsible]
+====
+- 200 - success/OK
+- 201 - CREATED - used in POST or PUT methods.
+- 304 - NOT MODIFIED - used in conditional GET requests to reduce the bandwidth use of the network. Here, the body of the response sent should be empty.
+- 400 - BAD REQUEST - This can be due to validation errors or missing input data.
+- 401 - FORBIDDEN - sent when the user does not have access (or is forbidden) to the resource.
+- 404 - NOT FOUND - Resource method is not available.
+- 500 - INTERNAL SERVER ERROR - server threw some exceptions while running the method.
+- 502 - BAD GATEWAY - Server was not able to get the response from another upstream server.
+====
+
+.What is the difference between `401 Unauthorized` and `403 Forbidden`?
+[%collapsible]
+====
+It is about Authentication or Authorization (a.k.a. permissions), f/e.: +
+- Has the consumer not provided authentication credentials? Was their SSO Token invalid/timed out?  👉 *401 Unauthorized*. +
+- Was the consumer correctly authenticated, but they don’t have the required permissions/proper clearance to access the resource? 👉 *403 Forbidden*.
+====
+
+.When to use `202 Accepted`(as an alternative to `201, Created`?
+[%collapsible]
+====
+* If the resource will be created as a result of future processing — example: After a job/process has finished. +
+* If the resource already existed in some way, but this should not be interpreted as an error.
+====
+
+* How a client can send the information to a server?
+* What is the difference between `attribute` and `parameters`?
+* What are headers and different types of headers?
+* What is a `scope` in WEB application? What are the different `types of scopes`?
+
+.What is `Caching in HTTP`?
+[%collapsible]
+====
+Caching is one of the easiest methods to improve an API’s performance. If we have requests that frequently give back the same response, then a cached version of that response helps avoid additional service calls/database queries.
+====
+
+* What is `URL Encoding in HTTP`?
+* What is `HTTP Content Negotiation`?
+* What are `types of enterprise architecture`?
+* `Single-tier` architecture
+* `Two-tier` architecture
+* `Three-tier` architecture
+* `N-tier` architecture
+* What is role of containers in `Java EE`?
+* Explain different `types of containers`
+* Which are different application `developments` and `deployment roles`?
+* What is the process of `deploying application`?
+* What are `protocols`?
+* Can you explain the `components of the Web application`?
+* Can you explain the `MVC 1` and `MVC 2` architecture?
+
+* What is API?
+* What is API design?
+* What is API management?
+* What is API security?
+* What is the client-server design pattern?
+
+.What are REST and REST API?
+[%collapsible]
+====
+REST is an acronym for REpresentational State Transfer and an architectural style for distributed hypermedia systems. Roy Fielding first presented it in 2000 in his famous dissertation. +
+A REST API (also known as RESTful API) is an application programming interface (API or web API) that conforms to the constraints of REST architectural style and allows for interaction with RESTful web services.
+====
+
+.Compare HTTP with REST.
+[%collapsible]
+====
+TODO
+====
+
+.What are the differences between REST and AJAX?
+[%collapsible]
+====
+|REST | AJAX
+|REST- Representational State Transfer | AJAX - Asynchronous javascript and XML
+|REST has a URI for accessing resources by means of a request-response pattern. | AJAX uses XMLHttpRequest object to send requests to the server and the response is interpreted by the Javascript code dynamically.
+|REST is an architectural pattern for developing client-server communication systems. | AJAX is used for dynamic updation of UI without the need to reload the page.
+|REST requires the interaction between client and server. | AJAX supports asynchronous requests thereby eliminating the necessity of constant client-server interaction.
+====
+
+.What are `constraints` of the RESTful architecture?
+[%collapsible]
+====
+Every content in the REST architecture is considered a resource. The resource is analogous to the object in the object-oriented programming world. They can either be represented as text files, HTML pages, images, or any other dynamic data.
+
+The REST Server provides access to these resources whereas the REST client consumes (accesses and modifies) these resources. Every resource is identified globally by means of a URI.
+====
+
+.What is `REST Resource`?
+[%collapsible]
+====
+Every content in the REST architecture is considered a resource. The resource is analogous to the object in the object-oriented programming world. They can either be represented as text files, HTML pages, images, or any other dynamic data.
+
+The REST Server provides access to these resources whereas the REST client consumes (accesses and modifies) these resources. Every resource is identified globally by means of a URI.
+====
+
+.When API is considered `RESTful`?
+[%collapsible]
+====
+A RESTful API is an architectural style for an application program interface (API) that uses HTTP requests to access and use data. That data can be used to GET, PUT, POST and DELETE data types, which refers to the reading, updating, creating and deleting of operations concerning resources. +
+
+A RESTful API -- also referred to as a RESTful web service or REST API -- is based on representational state transfer (REST), which is an architectural style and approach to communications often used in web services development.
+====
+
+.What do you understand by `RESTful Web Services`?
+[%collapsible]
+====
+RESTful web services are services that follow REST architecture. REST stands for Representational State Transfer and uses HTTP protocol (web protocol) for implementation. These services are lightweight, provide maintainability, scalability, support communication among multiple applications that are developed using different programming languages. They provide means of accessing resources present at server required for the client via the web browser by means of request headers, request body, response body, status codes, etc.
+====
+
+.What are the features of `RESTful Web Services`?
+[%collapsible]
+====
+- The service is based on the Client-Server model.
+- The service uses HTTP Protocol for fetching data/resources, query execution, or any other functions.
+- The medium of communication between the client and server is called “Messaging”.
+- Resources are accessible to the service by means of URIs.
+- It follows the statelessness concept where the client request and response are not dependent on others and thereby provides total assurance of getting the required data.
+- These services also use the concept of caching to minimize the server calls for the same type of repeated requests.
+- These services can also use SOAP services as implementation protocol to REST architectural pattern.
+====
+
+.Can you tell the `disadvantages` of RESTful web services?
+[%collapsible]
+====
+- As the services follow the idea of statelessness, it is not possible to maintain sessions. (Session simulation responsibility lies on the client-side to pass the session id)
+- REST does not impose security restrictions inherently. It inherits the security measures of the protocols implementing it. Hence, care must be chosen to implement security measures like integrating SSL/TLS based authentications, etc
+====
+
+.What is the concept of `statelessness in REST`?
+[%collapsible]
+====
+The REST architecture is designed in such a way that the client state is not maintained on the server. This is known as statelessness. The context is provided by the client to the server using which the server processes the client’s request. The session on the server is identified by the session identifier sent by the client.
+====
+
+.What makes REST services to be easily scalable?
+[%collapsible]
+====
+REST services follow the concept of statelessness which essentially means no storing of any data across the requests on the server. This makes it easier to scale horizontally because the servers need not communicate much with each other while serving requests.
+====
+
+.Define `Messaging` in terms of RESTful web services.
+[%collapsible]
+====
+The technique of sending a message from the REST client to the REST server in the form of an HTTP request and the server responding back with the response as HTTP Response is called `Messaging`. The messages contained constitute the data and the metadata about the message.
+====
+
+.What do you understand by JAX-RS?
+[%collapsible]
+====
+As the name itself stands (JAX-RS= Java API for RESTful Web Services) is a Java-based specification defined by JEE for the implementation of RESTful services. The JAX-RS library makes usage of annotations from Java 5 onwards to simplify the process of web services development. The latest version is 3.0 which was released in June 2020. This specification also provides necessary support to create REST clients
+====
+
+.While creating URI for web services, what are the best practices that needs to be followed?
+[%collapsible]
+====
+- While defining resources, use plural nouns. Example: To identify user resource, use the name “users” for that resource.
+- While using the long name for resources, use underscore or hyphen. Avoid using spaces between words. For example, to define authorized users resource, the name can be “authorized_users” or “authorized-users”.
+- The URI is case-insensitive, but as part of best practice, it is recommended to use lower case only.
+- While developing URI, the backward compatibility must be maintained once it gets published. When the URI is updated, the older URI must be redirected to the new one using the HTTP status code 300.
+- Use appropriate HTTP methods like GET, PUT, DELETE, PATCH, etc. It is not needed or recommended to use these method names in the URI. Example: To get book details of a particular ID, use /books/{id} instead of /getBook
+- Use the technique of forward slashing to indicate the hierarchy between the resources and the collections. Example: To get the authors of the book of a particular id, we can use: /books/{id}/authors
+====
+
+.What are the best practices to develop RESTful web services?
+[%collapsible]
+====
+RESTful web services use REST API as means of implementation using the HTTP protocol. REST API is nothing but an application programming interface that follows REST architectural constraints such as statelessness, cacheability, maintainability, and scalability.
+
+- Since REST supports multiple data formats, it is however good practice to develop REST APIs that accept and responds with JSON data format whenever possible.
+* To ensure that the application responds using JSON data format, the response header should have Content-Type set to as application/JSON, this is because certain HTTP clients look at the value of this response header to parse the objects appropriately.
+* To ensure that the request sends the data in JSON format, again the Content-Type must be set to application/JSON on the request header.
+- While naming the resource endpoints, ensure to use plural nouns and not verbs.
+- To represent the hierarchy of resources, use the nesting in the naming convention of the endpoints. In case, you want to retrieve data of one object residing in another object, the endpoint should reflect this to communicate what is happening.
+- Error Handling should be done gracefully by returning appropriate error codes the application has encountered. REST has defined standard HTTP Status codes that can be sent along with the response based on the scenario.
+- While retrieving huge resource data, it is advisable to include filtering and pagination of the resources. This is because returning huge data all at once can slow down the system and reduce the application performance.
+- Good security practices are a must-have while developing REST APIs. The client-server communication must be private due to the nature of data sensitivity.
+- Since REST supports the feature of caching, we can use this feature to cache the data in order to improve the application performance. Caching is done to avoid querying the database for a request repeated times. Caching makes data retrieval fast. However, care must be taken to ensure that the cache has updated data and not outdated ones. Frequent cache update measures need to be incorporated. There are many cache providers like Redis that can assist in caching.
+- API Versioning: Versioning needs to be done in case we are planning to make any changes with the existing endpoints.
+====
+
+.What are Idempotent methods? How is it relevant in RESTful web services domain?
+[%collapsible]
+====
+The meaning of idempotent is that even after calling a single request multiple times, the outcome of the request should be the same. While designing REST APIs, we need to keep in mind to develop idempotent APIs. This is because the consumers can write client-side code which can result in duplicate requests intentionally or not. Hence, fault-tolerant APIs need to be designed so that they do not result in erroneous responses.
+
+- Idempotent methods ensure that the responses to a request if called once or ten times or more than that remain the same.
+- REST provides idempotent methods automatically. GET, PUT, DELETE, HEAD, OPTIONS, and TRACE are the idempotent HTTP methods. POST is not idempotent.
+====
+
+.Can you tell what constitutes the core components of `HTTP Request`?
+[%collapsible]
+====
+- Method/Verb − This part tells what methods the request operation represents. Methods like GET, PUT, POST, DELETE, etc are some examples.
+- URI − This part is used for uniquely identifying the resources on the server.
+- HTTP Version − This part indicates what version of HTTP protocol you are using. An example can be HTTP v1.1.
+- Request Header − This part has the details of the request metadata such as client type, the content format supported, message format, cache settings, etc.
+- Request Body − This part represents the actual message content to be sent to the server.
+====
+
+.What constitutes the core components of `HTTP Response`?
+[%collapsible]
+====
+- Response Status Code − This represents the server response status code for the requested resource. Example- 400 represents a client-side error, 200 represents a successful response.
+- HTTP Version − Indicates the HTTP protocol version.
+- Response Header − This part has the metadata of the response message. Data can describe what is the content length, content type, response date, what is server type, etc.
+- Response Body − This part contains what is the actual resource/message returned from the server.
+====
+
+.Define Addressing in terms of RESTful Web Services.?
+[%collapsible]
+====
+Addressing is the process of locating a single/multiple resources that are present on the server. This task is accomplished by making use of URI (Uniform Resource Identifier). +
+The general format of URI is `<protocol>://<application-name>/<type-of-resource>/<id-of-resource>`
+====
+
+.Can we implement transport layer security (TLS) in REST?
+[%collapsible]
+====
+Yes. TLS does the task of encrypting the communication between the REST client and the server and provides the means to authenticate the server to the client. It is used for secure communication as it is the successor of the Secure Socket Layer (SSL). HTTPS works well with both TLS and SSL thereby making it effective while implementing RESTful web services. One point to mention here is, the REST inherits the property of the protocol it implements. So security measures are dependent on the protocol REST implements.
+====
+
+.Should we make the resources thread safe explicitly if they are made to share across multiple clients?
+[%collapsible]
+====
+There is no need to explicitly making the resources thread-safe because, upon every request, new resource instances are created which makes them thread-safe by default.
+====
+
+.What is Payload in terms of RESTful web services?
+[%collapsible]
+====
+Payload refers to the data passes in the request body. It is not the same as the request parameters. The payload can be sent only in POST methods as part of the request body.
+====
+
+.Is it possible to send payload in the `GET` and `DELETE` methods?
+[%collapsible]
+====
+No, the payload is not the same as the request parameters. Hence, it is not possible to send payload data in these methods
+====
+
+.What is the maximum payload size that can be sent in POST methods?
+[%collapsible]
+====
+Theoretically, there is no restriction on the size of the payload that can be sent. But one must remember that the greater the size of the payload, the larger would be the bandwidth consumption and time taken to process the request that can impact the server performance
+====
+
+
+.How can you test RESTful Web Services?
+[%collapsible]
+====
+RESTful web services can be tested using various tools like Postman, Swagger, etc. Postman provides a lot of features like sending requests to endpoints and show the response which can be converted to JSON or XML and also provides features to inspect request parameters like headers, query parameters, and also the response headers. Swagger also provides similar features like Postman and it provides the facility of documentation of the endpoints too. We can also use tools like Jmeter for performance and load testing of APIs.
+====
+
+.How does HTTP Basic Authentication work?
+[%collapsible]
+====
+While implementing Basic Authentication as part of APIs, the user must provide the username and password which is then concatenated by the browser in the form of “username: password” and then perform base64 encoding on it. The encoded value is then sent as the value for the “Authorization” header on every HTTP request from the browser. Since the credentials are only encoded, it is advised to use this form when requests are sent over HTTPS as they are not secure and can be intercepted by anyone if secure protocols are not used
+====
+
+.What is the difference between idempotent and safe HTTP methods?
+[%collapsible]
+====
+* Safe methods are those that do not change any resources internally. These methods can be cached and can be retrieved without any effects on the resource.
+* Idempotent methods are those methods that do not change the responses to the resources externally. They can be called multiple times without any change in the responses.
+====
+
+=== Spring RESTful Web Services
+
+.Define RestTemplate in Spring
+[%collapsible]
+====
+The RestTemplate is the main class meant for the client-side access for Spring-based RESTful services. The communication to the server is accomplished using the REST constraints. This is similar to other template classes such as JdbcTemplate, HibernateTemplate, etc provided by Spring. The RestTemplate provides high-level implementation details for the HTTP Methods like GET, POST, PUT, etc, and gives the methods to communicate using the URI template, URI path params, request/response types, request object, etc as part of arguments.
+
+Commonly used annotations like @GetMapping, @PostMapping, @PutMapping, etc are provided by this class from Spring 4.3. Prior to that, Spring provided (and still provides) @RequestMapping annotation to indicate what methods were being used
+====
+
+.What is the use of `@RequestMapping`?
+[%collapsible]
+====
+* The annotation is used for mapping requests to specific handler classes or methods.
+* In spring, all the incoming web request routing is handled by Dispatcher Servlet. When it gets the request, it determines which controller is meant for processing the request by means of request handlers. The Dispatcher Servlet scans all the classes annotated with @Controller. The process of routing requests depends on @RequestMapping annotations that are declared inside the controller classes and their methods
+====
+
+.What does the annotation `@PathVariable` do?
+[%collapsible]
+====
+@PathVariable annotation is used for passing the parameter with the URL that is required to get the data. Spring MVC provides support for URL customization for data retrieval using @PathVariable annotation
+====
+
+.Is it necessary to keep Spring MVC in the classpath for developing RESTful web services?
+[%collapsible]
+====
+Yes. Spring MVC needs to be on the classpath of the application while developing RESTful web services using Spring. This is because, the Spring MVC provides the necessary annotations like @RestController, @RequestBody, @PathVariable, etc. Hence the spring-mvc.jar needs to be on the classpath or the corresponding Maven entry in the pom.xml
+====
+
+.Define HttpMessageConverter in terms of Spring REST?
+[%collapsible]
+====
+HttpMessageConverter is a strategic interface that specified a converter for conversion between HTTP Requests and responses. Spring REST uses the HttpMessageConverter for converting responses to various data formats like JSON, XML, etc. Spring makes use of the “Accept” header for determining the type of content the client expects. Based on this, Spring would find the registered message converter interface that is capable of this conversion.
+====
+
+.What are the differences between the annotations `@Controller` and `@RestController`?
+[%collapsible]
+====
+| @Controller | @RestController
+| Mostly used traditional Spring MVC service. | Represents RESTful web service in Spring.
+| It is mostly used in Spring MVC service where model data needs to rendered using view. | It is used in case of RESTful web service that returns object values bound to response body.
+| If response values need to be converted through HttpMessageConverters and sent via response object, extra annotation @ResponseBody needs to be used on the class or the method handlers. | The default behavior of the @RestController needs to be written on the response body because it is the combination of @Controller and @ResponseBody.
+| @Controller provides control and flexibility over how the response needs to be sent. | @RestController annotation has no such flexibility and writes all the results to the response body.
+====
+
+=== PRACTICAL TASKS: REST
+
+.Fill missed parts about REST methods?
+[options="header"]
+|=======================
+|HTTP Method | Idempotence | Safety
+|OPTIONS | [ ] | [ ]
+|GET | [ ] | [ ]
+|HEAD | [ ] | [ ]
+|PUT | [ ] | [ ]
+|POST | [ ] | [ ]
+|DELETE | [ ] | [ ]
+|PATCH | [ ] | [ ]
+|=======================
+[%collapsible]
+====
+REST provides idempotent methods automatically. GET, PUT, DELETE, HEAD, OPTIONS, and TRACE are the idempotent HTTP methods. POST is not idempotent.
+
+- POST is not idempotent because POST APIs are usually used for creating a new resource on the server. While calling POST methods N times, there will be N new resources. This does not result in the same outcome at a time.
+- Methods like GET, OPTIONS, TRACE, and HEAD are idempotent because they do not change the state of resources on the server. They are meant for resource retrieval whenever called. They do not result in write operations on the server thereby making it idempotent.
+- PUT methods are generally used for updating the state of resources. If you call PUT methods N times, the first request updates the resource and the subsequent requests will be overwriting the same resource again and again without changing anything. Hence, PUT methods are idempotent.
+- DELETE methods are said to be idempotent because when calling them for N times, the first request results in successful deletion (Status Code 200), and the next subsequent requests result in nothing - Status Code 204. The response is different, but there is no change of resources on the server-side.
+- However, if you are attempting to delete the resource present, at last, every time you hit the API, such as the request DELETE /user/last which deletes the last user record, then calling the request N times would delete N resources on the server. This does not make DELETE idempotent. In such cases, as part of good practices, it is advisable to use POST requests
+
+|=======================
+|HTTP Method | Idempotence | Safety
+|OPTIONS | icon:check[] | icon:check[]
+|GET | icon:check[] | icon:check[]
+|HEAD | icon:check[] | icon:check[]
+|PUT | icon:check[] |
+|POST |  |
+|DELETE | icon:check[] |
+|PATCH | |
+|=======================
+====
+
+.What protocol does REST follow?
+- FTP
+- HTTP
+- SFTP
+- FTPS
+
+.What constraint is not a strict requirement for a service to be called a RESTful web service?
+- Uniform Interface
+- Code on Demand
+- Stateless
+- Client-Server
+- All of the above
+
+.Which component of HTTP response has the metadata for stating the type of response message is in the form of key-value pairs?
+- Status Code
+- Response Body
+- HTTP Version
+- Response Header
+
+.HTTP Code 200 represents which among the following?
+- Completed
+- Success
+- Failure
+- Warning
+
+.Which of the following options are true for REST Services?
+- Each resource can be identified by multiple URIs.
+- REST supports only JSON representation.
+- In REST Services, the client gets access to resources and the server provides access to them.
+- All of the above.
+
+.What method should be used to obtain a list of supported operations in REST services?
+- GET
+- DELETE
+- HEAD
+- OPTION
+
+.What category do 1xx HTTP status codes belong to?
+- Server Error
+- Redirection
+- Client Error
+- Informational
+
+.What category does the 5xx HTTP code belong to?
+- Redirection
+- Warning
+- Client Error
+- Server Error
+
+.What does the status code 302 represent?
+- User can select among multiple links and go to different page.
+- Not Modified
+- The resource requested has been found and moved temporarily to new URL location.
+- The page requested is available only by means of proxy address given in the response.
+
+.Is it possible to maintain sessions in REST on the server-side?
+- No
+- Yes
+- Depends on situation
+
+.Which among the below directives belonging to the Cache-Control header of HTTP response provide information to the server that the resources have to be revalidated if max-age has crossed?
+- no-store
+- expired
+- must-revalidate
+- no-cache
+- None of the above
+
+.Which directive of the Cache-control header in the HTTP Response tells that the resource cannot be cached?
+- public
+- max-age
+- must-revalidate
+- no-cache/no-store
+- private

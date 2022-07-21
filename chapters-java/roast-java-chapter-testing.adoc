@@ -1,0 +1,81 @@
+== TESTING
+
+* What is the difference between manual testing and automated testing?
+* What are disadvantages of manual testing?
+* What are advantages of automated testing?
+* What is `unit testing`?
+* Is the use of 'main' method still possible for unit testing?
+* What is `integration testing`?
+* What is `regression testing`?
+* What are the differences between `integration` and `regression` testing?
+* What is `validation testing`?
+* What are the benefits of unit testing?
+* How does unit testing saves time in long run?
+* How can you use unit testing to document the coding scenarios?
+* Is it necessary to write the test class to test every class?
+* What are the different ways to test private members?
+* Can you use `Reflection` to test private members?
+* Why you shouldn’t use reflection to test private members?
+* What are the alternate ways to test private members?
+* How to test 'protected' methods properly?
+* What are `mock` objects?
+* What are the benefits of using mock objects?
+* Why mock objects helps to speed up the tests?
+* How does mocking helps to achieve faster development cycle?
+* What are the types of dependencies that you should replace mock objects with?
+* What is `JUnit`?
+* Explain who should use JUnit – a developer or tester?
+* Is it possible to run JUnit from the command window? How?
+* What is the `Unit Test Case`?
+* What is the `Test Suit`?
+* What does `Test Runner`?
+* What are the `features of JUnit`?
+* What are the useful `JUnit extensions`?
+* Explain how you can write a simple JUnit test case?
+* What are `parameterized tests`?
+* Can you explain how do you test a unit of your application?
+* What does `Assert` class?
+* What are the important JUnit annotations?
+* What is the use of `@Test` annotation?
+* What is use of `@Before` and `@After` annotations?
+* What is use of the JUnitCore class?
+* What is ignored test in JUnit? Why do we need it?
+
+* Mention different methods of exception handling in JUnit?
+
+[%collapsible]
+====
+* Try catch idiom
+* With JUnit rule
+* With @Test annotation
+* With catch exception library
+* With customs annotation
+====
+
+* What are `fixtures`?
+
+[%collapsible]
+====
+When there are multiple test cases in a JUnit class, there could be a common object or objects used by all the test cases. In this case, there could be specific functions that might be common throughout all the test cases. +
+
+This doesn’t mean that the test objects have to be shared by all the test cases. The change to the object made in one test doesn’t have to be shared across all the tests as these tests are independent and may be executed in a different order as per their priority set. +
+
+The holistic understanding of the term ‘Test Fixture’ is a fixed state in a code or a set of fixed steps in a code that is used as a precondition and few other sets of steps that are used as postcondition for all the tests. +
+
+Thus, in other words, we are identifying those sets of statements that will repeat for all tests and thereby, try setting a fixed environment for our test methods to run. +
+
+The purpose of using Test Fixture is to eliminate the duplication of the common code for all the testcases.
+====
+
+
+* What are the methods in `fixtures`?
+
+[%collapsible]
+====
+Fixtures contains the following methods: +
+
+- setup
+- teardown
+====
+
+* What is the difference between `JUnit` and `TestNG`?

@@ -1,0 +1,109 @@
+== THREADING
+
+* What is a `thread`?
+* What is a `program`?
+* What is a `process`?
+* What is the difference between a thread and a process?
+* What is the difference between a program and a process?
+* Explain `context switching` of thread?
+* What is `parallel processing`?
+* What is `multi-threading`?
+* How `parallel processing` and `multi-threading` related?
+* What is `deadlock`?
+* What is a `user thread`?
+* What is `thread local storage`? What are the things would you store with thread local storage?
+* Do threads share stack memory?
+* Describe different stages of thread lifecycle?
+* What is difference between `blocked` state and `waiting` state?
+* How can you find thread’s state?
+* How thread `sleep()` method is different from thread `wait()` method?
+* Define a good strategy to terminate a thread?
+* What is thread interrupt? How thread’s interrupt method is different from thread’s stop method?
+* What happens if a thread is sleeping and you call interrupt on the thread?
+* Does calling interrupt stops the thread immediately?
+* Why you shouldn’t call thread’s `stop` and `suspend` methods?
+* What are the different ways to create a thread?
+* How `implementing Runnable` interface is different from `extending Thread` class?
+* When should you extend Thread class?
+* When should you inherit Runnable Interface?
+* Between Runnable and Thread, which one is the preferred way?
+* Does implementing Runnable creates a thread?
+* Both Thread class and Runnable Interface have run methods, what is the difference?
+* What is the difference between `Callable` and `Runnable` interface?
+* What is the benefit of using Runnable over Callable?
+* Can you throw checked exception from Runnable interface?
+* Why Runnable and Callable interfaces are called Functional Interface?
+* Which of the Interface returns result: Runnable or Callable?
+* What is `Daemon thread`?
+* What is `user thread`? What is `main thread`?
+* Can a program exit if Daemon thread is still running?
+* Can a program exit if user thread is still running?
+* When JVM halts exiting all running Daemon thread, does the finally block on a Daemon thread still gets a chance to execute?
+* When a new thread is created; is it created as a user thread or a Daemon thread?
+* What happens when no user thread is running but a Daemon thread is still running?
+* What is Java main thread: a user thread or a Daemon thread?
+* When you create a new thread on the main thread, what’s the type of thread created: daemon or user?
+* For what type of jobs should you use Daemon thread?
+* What is `Race condition`?
+* What is `Immutable Object`?
+* How immutable objects help preventing race condition?
+* Why race condition may produce unpredictable results?
+* Why immutable objects are considered safe in multi-threaded environment?
+* Why should you declare immutable class as final?
+* Why constructor should be the only way to create immutable object? What happens if setters are provided?
+* What is `thread pool`?
+* How a thread pool reduces the overhead of thread creation?
+* How a thread pool helps to prevent application from hanging or crashing?
+* How does thread pool enables loosely coupled design?
+* What is `fixed thread pool` and how we can create it?
+
+
+=== PRACTICAL TASKS: Threading
+
+.What are various stages of thread states? Could you please draw a state diagram:
+[%collapsible]
+====
+[source,java]
+----
+NEW
+RUNNABLE
+BLOCKED
+WAITING
+TIME-WAITING
+TERMINATED
+----
+====
+
+.Runnable vs Callable:
+[%collapsible]
+====
+[source,java]
+----
+Java Version
+Execution Mechanism
+Return Values
+Exception Handling
+----
+====
+
+.Create simple Daemon Thread
+[%collapsible]
+====
+[source,java]
+----
+Thread myThread = new Thread();
+myThread.setDaemon(true);
+----
+====
+
+.How ot create `fixed thread pool`?
+[%collapsible]
+====
+[source,java]
+----
+Syntax:
+public static ExecutorService newFixedThreadPool(int nThreads)
+public static ExecutorService newFixedThreadPool(int nThreads, ThreadFactory threadFactory)
+----
+====
+The `newFixedThreadPool()` method of `Executors` class creates a thread pool that reuses a fixed number of threads operating off a shared unbounded queue. At any point, at most n Threads will be active processing tasks. If additional tasks are submitted when all threads are active, they will wait in the queue until a thread is available.

@@ -1,0 +1,183 @@
+== SERVLETS
+
+* What is a `Servlet` and its use?
+* Explain the `Servlet life cycle`
+* Explain the steps to develop a `Servlet-based` application.
+* Explain the ways to `configure Servlets`?
+* How to read request parameters?
+* What is the difference between the `getRequestDispatcher()` method of `ServletRequest` and `ServletContext`?
+* How to define the custom `init()` method?
+* Explain the difference between `ServletConfig` and `ServletContext`
+* What is session tracking? What are ways of session tracking?
+* Why session tracking is required? When to use session tracking?
+* How to work with the HttpSession object in a Servlet?
+* What is `event handling` in a Servlet?
+* What is `JSP`? Why to use JSP? How JSP is useful in Web programming?
+* What are the `advantages of JSP`?
+* Explain the `life cycle of JSP`?
+* What are `implicit objects` in JSP?
+* What do you mean by `action tag`? How can you use it?
+* What is the difference between `include directive` and `include standard action`?
+* What is `EL` and `EL function`?
+* Explain `JSTL`
+* How to create a `custom tag` in JSP?
+* What are `filters`? When to use filters? How to configure filters? +
+
+Как реализовать запуск сервлета одновременно с запуском приложения?::
+Контейнер сервлетов обычно загружает сервлет по первому запросу клиента. +
+Если необходимо загрузить сервлет прямо на старте приложения (например если загрузка сервлета происходит длительное время) следует использовать элемент <load-on-startup> в дескрипторе или аннотацию @loadOnStartup в коде сервлета, что будет указывать на необходимость загрузки сервлета при запуске. +
+Если целочисленное значение этого параметра отрицательно, то сервлет будет загружен при запросе клиента. В противном случае - загрузится на старте приложения, при этом, чем число меньше, тем раньше в очереди на загрузку он окажется. +
+
+.Example
+[source,xml]
+----
+<servlet>
+<servlet-name>ExampleServlet</servlet-name>
+<servlet-class>my.company.ExampleServlet</servlet-class>
+<load-on-startup>1</load-on-startup>
+</servlet>
+----
+
+Что представляет собой `ServletConfig`?::
+Интерфейс javax.servlet.ServletConfig используется для передачи сервлету конфигурационной информации. Каждый сервлет имеет свой собственный экземпляр объекта ServletConfig, создаваемый контейнером сервлетов. +
+Для установки параметров конфигурации используются параметры init-param в web.xml:
+[source,xml]
+----
+    <servlet-name>ExampleServlet</servlet-name>
+    <servlet-class>xyz.company.ExampleServlet</servlet-class>
+    <init-param>
+        <param-name>exampleParameter</param-name>
+        <param-value>parameterValue</param-value>
+    </init-param>
+</servlet>
+----
+
+[source,java]
+----
+или аннотации @WebInitParam:
+
+    urlPatterns = "/example",
+    initParams = {
+        @WebInitParam(name = "exampleParameter", value = "parameterValue")
+    }
+)
+public class ExampleServlet extends HttpServlet {
+    //...
+}
+----
+Для получения `ServletConfig` сервлета используется метод `getServletConfig()`.
+
+Как обработать в приложении исключения, выброшенные другим сервлетом?::
+Когда приложение выбрасывает исключение, контейнер сервлетов обрабатывает его и создаёт ответ в формате HTML. Это аналогично тому, что происходит при кодах ошибок вроде 404, 403 и т.д.
+
+В дополнении к этому существует возможность написания собственных сервлетов для обработки исключений и ошибок с указанием их в дескрипторе развертывания:
+[source,xml]
+----
+<error-code>404</error-code>
+<location>/AppExceptionHandler</location>
+</error-page>
+
+<error-page>
+<exception-type>javax.servlet.ServletException</exception-type>
+<location>/AppExceptionHandler</location>
+</error-page>
+----
+Основная задача таких сервлетов - обработать ошибку/исключение и сформировать понятный ответ пользователю. Например, предоставить ссылку на главную страницу или же описание ошибки.
+
+
+В чем отличия ServletContext и ServletConfig?::
+ServletConfig уникален для сервлета, а ServletContext - для приложения;
+* ServletConfig используется для предоставления параметров инициализации конкретному сервлету, а ServletContext для предоставления параметров инициализации для всех сервлетов приложения;
+* для ServletConfig возможности модифицировать атрибуты отсутствуют, атрибуты в объекте ServletContext можно изменять.
+
+Что такое Request Dispatcher?::
+Интерфейс RequestDispatcher используется для передачи запроса другому ресурсу, при этом существует возможность добавления данных, полученных из этого ресурса к собственному ответу сервлета. Так же этот интерфейс используется для внутренней коммуникации между сервлетами в одном контексте.
+
+В интерфейсе объявлено два метода:
+• void forward(ServletRequest var1, ServletResponse var2) — передает запрос из сервлета к другому ресурсу (сервлету, JSP или HTML файлу) на сервере.
+• void include(ServletRequest var1, ServletResponse var2) — включает контент ресурса (сервлет, JSP или HTML страница) в ответ.
+
+Доступ к интерфейсу можно получить с помощью метода интерфейса ServletContext - RequestDispatcher getRequestDispatcher(String path), где путь начинающийся с /, интерпретируется относительно текущего корневого пути контекста.
+
+.Why `HttpServlet` class defined as abstract?
+[%collapsible]
+====
+Класс HTTPServlet предоставляет лишь общую реализацию сервлета для HTTP протокола. Реализация ключевых методов doGet() и doPost(), содержащих основную бизнес-логику перекладывается на разработчика и по умолчанию возвращает HTTP 405 Method Not Implemented error.
+====
+
+.Какие классы-обертки для сервлетов вы знаете?
+[%collapsible]
+====
+Собственные обработчики ServletRequest и ServletResponse можно реализовать, добавив новые или переопределив существующие методы у классов-обёрток ServletRequestWrapper (HttpServletRequestWrapper) и ServletResponseWrapper (HttpServletRequestWrapper).
+====
+
+.Как получить реальное расположение сервлета на сервере?
+[%collapsible]
+====
+Реальный путь к расположению сервлета на сервере можно получить из объекта ServletContext:
+`getServletContext().getRealPath(request.getServletPath())`
+====
+
+.Как получить информацию о сервере из сервлета?
+[%collapsible]
+====
+Информацию о сервере можно получить из объекта ServletContext:
+
+getServletContext().getServerInfo().
+====
+
+.Как получить IP адрес клиента на сервере?
+[%collapsible]
+====
+IP адрес клиента можно получить вызвав request.getRemoteAddr().
+====
+
+.Каким образом можно допустить в сервлете deadlock?
+[%collapsible]
+====
+Можно получить блокировку, например, допустив циклические вызовы метода doPost() в методе doGet() и метода doGet() в методе doPost().
+====
+
+.Стоит ли волноваться о многопоточной безопасности, работая с сервлетами?
+[%collapsible]
+====
+Методы init() и destroy() вызываются один раз за жизненный цикл сервлета — поэтому по поводу них беспокоиться не стоит.
+
+Методы doGet(), doPost(), service() вызываются на каждый запрос клиента и т.к. сервлеты используют многопоточность, то здесь задумываться о потокобезопасной работе обязательно. При этом правила использования многопоточности остаются теми же: локальные переменные этих методов будут созданы отдельно для каждого потока, а при использовании глобальных разделяемых ресурсов необходимо использовать синхронизацию или другие приёмы многопоточного программирования.
+====
+
+.В чем разница между методами GET и POST?
+[%collapsible]
+====
+* GET передает данные серверу используя URL, тогда как POST передает данные, используя тело HTTP запроса. Длина URL ограничена 1024 символами, это и будет верхним ограничением для данных, которые можно отослать через GET. POST может отправлять гораздо большие объемы данных. Лимит устанавливается web-server и составляет обычно около 2 Mb.
+* Передача данных методом POST более безопасна, чем методом GET, так как секретные данные (например пароль) не отображаются напрямую в web-клиенте пользователя, в отличии от URL, который виден почти всегда. Иногда это преимущество превращается в недостаток - вы не сможете послать данные за кого-то другого.
+* GET метод является неизменяемым, тогда как POST — изменяемый.
+====
+
+=== PRACTICAL TASKS: servlets
+
+.Continue simple code to print something
+[%collapsible]
+====
+[source,java]
+----
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class HelloWorld extends HttpServlet {
+
+   public void init() throws ServletException {
+
+   }
+
+   public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // TODO: print "Hello World" to the output
+   }
+
+   public void destroy() {
+
+   }
+}
+----
+====

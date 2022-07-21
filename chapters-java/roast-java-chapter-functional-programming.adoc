@@ -1,0 +1,204 @@
+== FUNCTIONAL PROGRAMMING, STREAM API
+
+* What is `Function Interface`?
+* What are the benefits of using Functional Interface?
+* What is the difference between normal and functional interfaces in Java?
+* What is `Predicate` interface?
+* What is `Supplier` interface?
+* What is `Comsumer` interface?
+* What is `Function` interface?
+* What is Lambda Expression?
+* How is Lambda Expression and Anonymous class related?
+* Can you pass Lambda Expression as method parameter?
+* What is the meaning of deferred execution of functionality, using a Lambda Expression?
+* What are the benefits of using Lambda Expression?
+* How’s Lambda Expression and Functional Interface related?
+* What is `method reference`?
+* What is a `Pure Function`?
+* What is the use of `Pure Function` in Functional Programming?
+* How is it guaranteed that the Pure Function will always return the same results for the same arguments?
+* What is `Fluent Interface`?
+* What are the benefits of defining and using Fluent Interface?
+* Describe some usage of Fluent Interface?
+* What is `Stream API`?
+* What is the difference between `Collection` and `Stream`?
+* What is the parallel Stream?
+* What are intermediate operations?
+* What are terminal operations?
+* What is the difference between intermediate and terminal operations on Stream?
+* What do we say that Stream is lazy?
+* What is the difference between `findFirst()` and `findAny()` methods?
+* What does `peek()` method do? When to use it?
+* What is the difference between `flatMap()` and `map()`?
+* What are  isParallel`, 'parallel`, 'sequential' methods?
+
+
+.What are techniques to create the stream?::
+[%collapsible]
+====
+* empty stream: `Stream.empty()`
+* from collection: `collection.stream()`
+* parallel stream from collection: `collection.parallelStream()`
+* from values: `Stream.of(value1,...valueN)`
+* from array: `Arrays.stream(array)`
+* from file: `Files.lines(file_path)`
+* from string: "some_string".chars()`
+* Stream.builder: `Stream.builder().add(...)....build()`
+* endless stream via `Stream.iterate`: `Stream.iterate(initial_condition, generate_expressions)`
+* endless stream via `Stream.generate`: `Stream.generate(expression)`
+* stream of primitives: `IntStream.range(from, to)`, `LongStream.rangeCosed(from, to`)
+* What is collector?
+* What is `java.util.stream.Collectors`?
+* What is inside `java.util.function` package?
+
+====
+
+.What is the purpose of methods `forEach` and `forEachOrdered`?
+[%collapsible]
+====
+* `forEach()` applies function to every object of the stream and the order is not guaranteed in case of parallel processing;
+* `forEachOrdered()` applies function to every object of the stream saving the order of elements.
+====
+
+=== PRACTICAL TASKS: Stream API
+
+.Examples of lambda exception
+[%collapsible]
+====
+[source,java]
+----
+() -> 123
+(x,y) -> x + y
+(Double x, Double y) -> x*y
+----
+====
+
+.Find the sum of all odd numbers in the collection
+[%collapsible]
+====
+[source,java]
+----
+Integer sumOdd = collection.stream().filter(n -> n % 2 != 0).reduce((s1, s2) -> s1 + s2).orElse(0);
+Integer sumOddInParallel = collection.parallelStream().filter(n -> n % 2 != 0).reduce((s1, s2) -> s1 + s2).orElse(0);
+----
+====
+
+.intermediate methods
+[%collapsible]
+====
+[source,java]
+----
+//filter
+collection.stream().filter("a1"::equals).count()
+//skip
+collection.stream().skip(collection.size() — 1).findFirst().orElse("1")
+//distinct
+collection.stream().distinct().collect(Collectors.toList())
+//map
+collection.stream().map((s) -> s + "_1").collect(Collectors.toList())
+//mapToInt,
+//mapToDouble,
+//mapToLong
+collection.stream().mapToInt((s) -> Integer.parseInt(s)).toArray()
+//flatMap,
+//flatMapToInt,
+//flatMapToDouble,
+//flatMapToLong
+collection.stream().flatMap((s) -> Arrays.asList(s.split(",")).stream()).toArray(String[]::new)
+//peek
+collection.stream().map(String::toUpperCase).peek((e) -> System.out.print("," + e)).
+collect(Collectors.toList())
+//limit
+collection.stream().limit(2).collect(Collectors.toList())
+//sorted
+collection.stream().sorted().collect(Collectors.toList())
+
+----
+====
+
+.terminal methods
+[%collapsible]
+====
+[source,java]
+----
+//findFirst
+collection.stream().findFirst().orElse("1")
+//findAny
+collection.stream().findFirst().orElse("1")
+//collect
+collection.stream().filter((s) -> s.contains(«1»)).collect(Collectors.toList())
+//count
+collection.stream().filter("a1"::equals).count()
+//anyMatch
+collection.stream().anyMatch("a1"::equals)
+//noneMatch
+collection.stream().noneMatch("a1"::equals)
+//allMatch
+collection.stream().allMatch((s) -> s.contains(«1»))
+//min
+collection.stream().min(String::compareTo).get()
+//max
+collection.stream().max(String::compareTo).get()
+//forEach
+set.stream().forEach((p) -> p.append("_->_"));
+//forEachOrdered
+list.stream().forEachOrdered((p) -> p.append("_new"));
+//toArray
+collection.stream().map(String::toUpperCase).toArray(String[]::new);
+//reduce
+collection.stream().reduce((s1, s2) -> s1 + s2).orElse(0)
+
+//primitive streams have additional methods
+//sum
+collection.stream().mapToInt((s) -> Integer.parseInt(s)).sum()
+//average
+collection.stream().mapToInt((s) -> Integer.parseInt(s)).average()
+//mapToObj
+intStream.mapToObj((id) -> new String(id)).toArray()
+----
+====
+
+.Playing with streams
+[%collapsible]
+====
+[source,java]
+----
+// given
+List<String> collection = Arrays.asList("H", "e", "l", "l", "o", "J", "a", "v", "a");
+// count "a"
+// return first element of the collection or "empty" if it is empty
+// return last element of the collection or "empty" if it is empty
+collection.stream().skip(collection.size() - 1).findAny().orElse("empty")
+// return 3d element of the collection
+// return 3 elements starting from 2nd element
+// select by template(only vowels)
+//list without duplicates
+// array of string in upper case
+//join all elements into one string
+
+----
+====
+
+.What is the output?
+[%collapsible]
+====
+[source,java]
+----
+public class Test {
+
+    public static void main(String... args) {
+        IntStream.iterate(0, i -> i + 1)
+                .limit(5)
+                .filter(i -> i % 2 == 0)
+                .forEach(System.out::print);
+
+        IntStream.iterate(0, i -> i + 1)
+                .peek(System.out::print)
+                .filter(i -> i % 2 == 0)
+                .limit(3)
+                .forEach(System.out::print);
+    }
+
+}
+----
+====
