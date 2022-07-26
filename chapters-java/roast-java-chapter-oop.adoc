@@ -164,10 +164,10 @@ Discuss GC, destructor, finalize, Runtime.getRuntime().gc(), null references.
 * `StringBuffer` — the same as StringBuilder, thread safe
 ====
 
-* What is a class?
-* What is an object?
+* What is a `class`?
+* What is an `object`?
 * What are the characteristics of an object?
-* What is a constructor and its role?
+* What is a `constructor` and its role?
 * Can we have a private constructor? Why and when?
 * Why all the instance variables have default values in Java?
 * What are the accessor and mutator methods in Java, and what is their significance?
@@ -177,19 +177,19 @@ Discuss GC, destructor, finalize, Runtime.getRuntime().gc(), null references.
 * How to use the clone method to create a new object?
 * When your code will throw the CloneNotSupported Exception?
 * How to serialize an object?
-* What is de-serialization, and how it generates a new object?
+* What is `de-serialization`, and how it generates a new object?
 * What are the different access specifiers present in Java? Can you explain their difference?
 * Can we apply a private modifier to class?
-* What is association in Java?
-* What is composition in Java?
+* What is `association` in Java?
+* What is `composition` in Java?
 * What is the difference between composition and aggregation?
 * What is difference between is-a-kind relation and has-a-kind relation in Java?
 * Can you explain when to use is-a-kind relationship and when to use has-a-kind relationship in Java?
 * How do you explain the term `coupling`?
 * How do you explain the term `cohesion`?
-* What do you mean by loose coupling?
-* What do you mean by tight coupling?
-* What is abstract class?
+* What do you mean by `loose coupling`?
+* What do you mean by `tight coupling`?
+* What is `abstract class`?
 * Can the abstract class contain constructors?
 * Why abstract classes provide constructors even though they are not instantiated?
 * What are concrete methods and abstract methods?
@@ -201,7 +201,7 @@ Discuss GC, destructor, finalize, Runtime.getRuntime().gc(), null references.
 [%collapsible]
 ====
 * The keywrod `final` can be applied to class, method, variables(inc. method parameters).
-* `final class` = no subclasses, inheritance is forbidden. It is useful to create unmodifable objects.
+* `final class` = no subclasses, inheritance is forbidden. It is useful to create unmodifiable objects.
 ====
 
 * Can we declare an abstract class as final?
@@ -237,7 +237,7 @@ It is implemented method in interfaces for backward compatibility.
 * Why the super keyword must be located as the first line o the constructor?
 * Do we have the destructors in Java?
 * Which methods are present in the Object class that can be overridden?
-* What is the equals() method, and how is it used?
+* What is the `equals` method, and how is it used?
 * Which is a cosmic super class in Java?
 * What is the difference between an equal operator (= =) and equals method?
 * What is a var argument? Where can it be used?
@@ -250,7 +250,8 @@ It is implemented method in interfaces for backward compatibility.
 * Can we override the static method?
 * What is a co-variant return type?
 * Can we change the return type of the overridden method?
-* What is a marker interface? * What is use of a marker interface?
+* What is a `marker interface`?
+* What is use of a marker interface?
 * What is typecasting in Java, and which are the different types of typecasting available in Java?
 * What are the types of variables in Java? Also explain their scope.
 * What is an instance initializer block in Java?
